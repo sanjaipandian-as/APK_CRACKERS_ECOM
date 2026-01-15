@@ -4,6 +4,8 @@ import { FaStar, FaShoppingCart, FaMinus, FaPlus, FaShare, FaTag, FaInfoCircle, 
 import { BsFillBagHeartFill } from 'react-icons/bs';
 import { MdLocalShipping, MdSecurity, MdVerified } from 'react-icons/md';
 import API from '../../../api';
+import Skeleton from '../Common/Skeleton';
+
 import Topbar from './Topbar';
 import Footer from './Footer';
 
@@ -358,14 +360,57 @@ const Productview = () => {
 
     if (loading) {
         return (
-            <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-                <div className="text-center">
-                    <div className="animate-spin rounded-full h-16 w-16 border-b-4 border-orange-500 mx-auto mb-4"></div>
-                    <p className="text-gray-600 font-medium">Loading product details...</p>
-                </div>
+            <div className="min-h-screen bg-gray-50 flex flex-col">
+                <Topbar />
+                <main className="flex-1 max-w-screen-2xl mx-auto px-4 sm:px-6 py-8 mt-10 mb-12">
+                    <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+                        {/* Image Skeleton */}
+                        <div className="lg:col-span-5">
+                            <Skeleton className="w-full h-[300px] sm:h-[350px] md:h-[400px] lg:h-[500px] rounded-xl mb-4" />
+                            <div className="grid grid-cols-4 gap-3">
+                                {[...Array(4)].map((_, i) => (
+                                    <Skeleton key={i} className="h-20 w-full rounded-lg" />
+                                ))}
+                            </div>
+                        </div>
+
+                        {/* Content Skeleton */}
+                        <div className="lg:col-span-7">
+                            <div className="flex justify-between mb-4">
+                                <Skeleton className="h-4 w-24" />
+                                <Skeleton className="h-6 w-12" />
+                            </div>
+                            <Skeleton className="h-10 w-3/4 mb-6" />
+
+                            <div className="flex gap-3 mb-8">
+                                <Skeleton className="h-8 w-24 rounded-full" />
+                                <Skeleton className="h-8 w-24 rounded-full" />
+                            </div>
+
+                            <div className="space-y-4 mb-8">
+                                <Skeleton className="h-12 w-1/2" />
+                                <Skeleton className="h-4 w-1/3" />
+                            </div>
+
+                            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 mb-8">
+                                {[...Array(6)].map((_, i) => (
+                                    <Skeleton key={i} className="h-16 w-full rounded-xl" />
+                                ))}
+                            </div>
+
+                            <div className="space-y-4">
+                                <Skeleton className="h-4 w-full" />
+                                <Skeleton className="h-4 w-full" />
+                                <Skeleton className="h-4 w-3/4" />
+                            </div>
+                        </div>
+                    </div>
+                </main>
+                <Footer />
             </div>
         );
     }
+
 
     if (error || !product) {
         return (

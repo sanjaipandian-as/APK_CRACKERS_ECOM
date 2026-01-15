@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { MdEmail, MdPhone, MdLocationOn, MdCreditCard, MdPrint, MdLocalShipping } from 'react-icons/md';
 import { FaCheckCircle, FaClock } from 'react-icons/fa';
 import API from '../../../../api';
+import Skeleton from '../../Common/Skeleton';
+
 import { formatAddress } from '../../../utils/addressHelper';
 
 const SellerOrderview = ({ orderId }) => {
@@ -40,11 +42,58 @@ const SellerOrderview = ({ orderId }) => {
 
     if (loading) {
         return (
-            <div className="p-8 bg-gray-50 min-h-screen flex items-center justify-center">
-                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-orange-500"></div>
+            <div className="p-8 bg-gray-50 min-h-screen">
+                <div className="mb-6 flex justify-between items-center">
+                    <Skeleton className="h-10 w-64" />
+                    <Skeleton className="h-10 w-32 rounded-lg" />
+                </div>
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    <div className="lg:col-span-2 space-y-6">
+                        <div className="bg-white rounded-xl p-6 border border-gray-100 space-y-6">
+                            <Skeleton className="h-6 w-48" />
+                            <div className="grid grid-cols-2 gap-4">
+                                {[...Array(4)].map((_, i) => (
+                                    <div key={i} className="space-y-2">
+                                        <Skeleton className="h-3 w-16" />
+                                        <Skeleton className="h-5 w-32" />
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                        <div className="bg-white rounded-xl p-6 border border-gray-100 space-y-6">
+                            <Skeleton className="h-6 w-48" />
+                            <div className="space-y-3">
+                                <Skeleton className="h-5 w-full" />
+                                <Skeleton className="h-5 w-full" />
+                                <Skeleton className="h-5 w-2/3" />
+                            </div>
+                        </div>
+                        <div className="bg-white rounded-xl p-6 border border-gray-100 space-y-6">
+                            <Skeleton className="h-6 w-48" />
+                            {[...Array(2)].map((_, i) => (
+                                <div key={i} className="flex gap-4">
+                                    <Skeleton className="w-12 h-12 rounded-lg" />
+                                    <div className="flex-1 space-y-2">
+                                        <Skeleton className="h-4 w-1/2" />
+                                        <Skeleton className="h-3 w-1/4" />
+                                    </div>
+                                    <Skeleton className="h-4 w-16" />
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                    <div className="space-y-6">
+                        <div className="bg-white rounded-xl p-6 border border-gray-100 space-y-4">
+                            <Skeleton className="h-6 w-32" />
+                            <Skeleton className="h-12 w-full rounded-lg" />
+                            <Skeleton className="h-12 w-full rounded-lg" />
+                        </div>
+                    </div>
+                </div>
             </div>
         );
     }
+
 
     if (error || !order) {
         return (

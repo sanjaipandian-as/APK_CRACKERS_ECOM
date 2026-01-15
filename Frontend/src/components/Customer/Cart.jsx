@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import { FaTrash, FaPlus, FaMinus, FaShoppingCart, FaTimes, FaCheckCircle, FaTag } from 'react-icons/fa';
 import { BsFillBagHeartFill } from 'react-icons/bs';
 import API from '../../../api';
+import Skeleton from '../Common/Skeleton';
+
 
 const Cart = () => {
     const navigate = useNavigate();
@@ -162,15 +164,15 @@ const Cart = () => {
                     <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
                         <div className="lg:col-span-8 space-y-4">
                             {[1, 2, 3].map((i) => (
-                                <div key={i} className="bg-white p-6 rounded-xl border border-gray-100 animate-pulse">
+                                <div key={i} className="bg-white p-6 rounded-xl border border-gray-100">
                                     <div className="flex gap-6">
-                                        <div className="w-32 h-32 bg-gray-100 rounded-lg"></div>
+                                        <Skeleton className="w-32 h-32 rounded-lg flex-shrink-0" />
                                         <div className="flex-1 space-y-4">
-                                            <div className="h-6 bg-gray-100 rounded w-3/4"></div>
-                                            <div className="h-4 bg-gray-100 rounded w-1/4"></div>
+                                            <Skeleton className="h-6 w-3/4" />
+                                            <Skeleton className="h-4 w-1/4" />
                                             <div className="flex justify-between items-center pt-4">
-                                                <div className="h-10 bg-gray-100 rounded w-32"></div>
-                                                <div className="h-8 bg-gray-100 rounded w-24"></div>
+                                                <Skeleton className="h-10 w-32" />
+                                                <Skeleton className="h-8 w-24" />
                                             </div>
                                         </div>
                                     </div>
@@ -178,14 +180,14 @@ const Cart = () => {
                             ))}
                         </div>
                         <div className="lg:col-span-4">
-                            <div className="bg-white p-8 rounded-xl border border-gray-100 animate-pulse space-y-6">
-                                <div className="h-8 bg-gray-100 rounded w-1/2"></div>
+                            <div className="bg-white p-8 rounded-xl border border-gray-100 space-y-6">
+                                <Skeleton className="h-8 w-1/2" />
                                 <div className="space-y-3">
-                                    <div className="h-4 bg-gray-100 rounded"></div>
-                                    <div className="h-4 bg-gray-100 rounded"></div>
-                                    <div className="h-4 bg-gray-100 rounded w-5/6"></div>
+                                    <Skeleton className="h-4 w-full" />
+                                    <Skeleton className="h-4 w-full" />
+                                    <Skeleton className="h-4 w-5/6" />
                                 </div>
-                                <div className="h-12 bg-gray-100 rounded mt-8"></div>
+                                <Skeleton className="h-12 w-full mt-8" />
                             </div>
                         </div>
                     </div>
@@ -193,6 +195,7 @@ const Cart = () => {
             </div>
         );
     }
+
 
     if (cartItems.length === 0) {
         return (
@@ -297,7 +300,7 @@ const Cart = () => {
                     {/* Cart Items Section */}
                     <div className="lg:col-span-8 mb-6 lg:mb-0">
                         <div className="bg-white rounded-lg p-4 sm:p-6 border border-gray-200">
-                            <div className="flex items-center justify-between pb-6 border-b border-gray-100">
+                            <div className="flex flex-wrap items-center justify-between pb-6 border-b border-gray-100 gap-4">
                                 <label className="flex items-center gap-3 cursor-pointer group">
                                     <div className="relative flex items-center">
                                         <input
@@ -356,23 +359,23 @@ const Cart = () => {
                                                     />
                                                 </div>
 
-                                                <div className="flex-1 flex flex-col justify-between">
+                                                <div className="flex-1 flex flex-col justify-between min-w-0">
                                                     <div className="space-y-1">
-                                                        <div className="flex justify-between items-start">
+                                                        <div className="flex justify-between items-start gap-2">
                                                             <h3
-                                                                className="text-base sm:text-lg font-semibold text-gray-900 leading-tight cursor-pointer hover:text-orange-600 transition-colors"
+                                                                className="text-base sm:text-lg font-semibold text-gray-900 leading-tight cursor-pointer hover:text-orange-600 transition-colors truncate sm:whitespace-normal"
                                                                 onClick={() => navigate(`/product/${product._id}`)}
                                                             >
                                                                 {product.name}
                                                             </h3>
                                                             <button
                                                                 onClick={() => removeItem(product._id)}
-                                                                className="p-2 text-gray-400 hover:text-red-500 transition-colors"
+                                                                className="p-2 text-gray-400 hover:text-red-500 transition-colors flex-shrink-0"
                                                             >
                                                                 <FaTrash className="w-4 h-4" />
                                                             </button>
                                                         </div>
-                                                        <div className="flex items-baseline gap-2">
+                                                        <div className="flex items-baseline gap-2 flex-wrap">
                                                             <span className="text-lg font-bold text-gray-900">₹{currentPrice.toFixed(2)}</span>
                                                             {originalPrice > currentPrice && (
                                                                 <span className="text-sm text-gray-400 line-through">₹{originalPrice.toFixed(2)}</span>
@@ -380,33 +383,35 @@ const Cart = () => {
                                                         </div>
                                                     </div>
 
-                                                    <div className="flex items-center justify-between mt-4">
-                                                        <div className="flex items-center border border-gray-200 rounded-lg overflow-hidden h-10">
+                                                    <div className="flex flex-wrap items-center justify-between mt-4 gap-3">
+                                                        <div className="flex items-center border border-gray-200 rounded-lg overflow-hidden h-9 sm:h-10 w-fit">
                                                             <button
                                                                 onClick={() => updateQuantity(product._id, item.quantity - 1)}
                                                                 disabled={updatingItem === product._id || item.quantity <= 1}
-                                                                className="px-3 h-full hover:bg-gray-50 disabled:opacity-30 transition-colors"
+                                                                className="px-2 sm:px-3 h-full hover:bg-gray-50 disabled:opacity-30 transition-colors"
                                                             >
-                                                                <FaMinus className="w-3 h-3" />
+                                                                <FaMinus className="w-2.5 h-2.5 sm:w-3 sm:h-3" />
                                                             </button>
-                                                            <span className="w-10 text-center text-sm font-bold border-x border-gray-200 h-full flex items-center justify-center">
+                                                            <span className="w-8 sm:w-10 text-center text-sm font-bold border-x border-gray-200 h-full flex items-center justify-center bg-white">
                                                                 {item.quantity}
                                                             </span>
                                                             <button
                                                                 onClick={() => updateQuantity(product._id, item.quantity + 1)}
                                                                 disabled={updatingItem === product._id}
-                                                                className="px-3 h-full hover:bg-gray-50 disabled:opacity-30 transition-colors"
+                                                                className="px-2 sm:px-3 h-full hover:bg-gray-50 disabled:opacity-30 transition-colors"
                                                             >
-                                                                <FaPlus className="w-3 h-3" />
+                                                                <FaPlus className="w-2.5 h-2.5 sm:w-3 sm:h-3" />
                                                             </button>
                                                         </div>
-                                                        <div className="text-right">
-                                                            <p className="text-sm font-bold text-gray-900">
+                                                        <div className="text-left xs:text-right">
+                                                            <p className="text-xs text-gray-400 font-medium uppercase tracking-wider mb-0.5 sm:hidden">Subtotal</p>
+                                                            <p className="text-sm sm:text-base font-bold text-gray-900">
                                                                 ₹{(currentPrice * item.quantity).toFixed(2)}
                                                             </p>
                                                         </div>
                                                     </div>
                                                 </div>
+
                                             </div>
                                         </div>
                                     );

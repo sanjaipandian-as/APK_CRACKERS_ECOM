@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import { FaTicketAlt, FaClock, FaCheckCircle, FaSpinner, FaTimesCircle, FaEye, FaChevronDown, FaChevronUp, FaInbox } from 'react-icons/fa';
 import API from '../../../api';
+import Skeleton from '../../Common/Skeleton';
+
 
 const Tickets = () => {
     const [tickets, setTickets] = useState([]);
@@ -128,14 +130,30 @@ const Tickets = () => {
 
     if (loading) {
         return (
-            <div className="flex items-center justify-center py-12">
-                <div className="text-center">
-                    <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-orange-500 mx-auto mb-4"></div>
-                    <p className="text-gray-600 font-medium">Loading your tickets...</p>
-                </div>
+            <div className="space-y-4">
+                {[...Array(3)].map((_, i) => (
+                    <div key={i} className="bg-white border-2 border-gray-100 rounded-xl p-6 space-y-4">
+                        <div className="flex justify-between items-start">
+                            <div className="space-y-3 flex-1">
+                                <div className="flex gap-2">
+                                    <Skeleton className="h-8 w-24 rounded-lg" />
+                                    <Skeleton className="h-8 w-32 rounded-lg" />
+                                </div>
+                                <Skeleton className="h-6 w-3/4" />
+                                <div className="flex gap-4">
+                                    <Skeleton className="h-4 w-24" />
+                                    <Skeleton className="h-4 w-32" />
+                                </div>
+                            </div>
+                            <Skeleton className="w-8 h-8 rounded-lg" />
+                        </div>
+                        <Skeleton className="h-12 w-full rounded-lg" />
+                    </div>
+                ))}
             </div>
         );
     }
+
 
     return (
         <div className="space-y-6">

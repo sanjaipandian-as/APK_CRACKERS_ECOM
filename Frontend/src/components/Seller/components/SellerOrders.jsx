@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { MdSearch, MdVisibility, MdPrint, MdDownload, MdCalendarToday } from 'react-icons/md';
 import { FaInfinity } from 'react-icons/fa';
 import API from '../../../../api';
+import Skeleton from '../../Common/Skeleton';
+
 const SellerOrders = ({ onViewOrder }) => {
     const [activeTab, setActiveTab] = useState('All');
     const [searchQuery, setSearchQuery] = useState('');
@@ -133,11 +135,41 @@ const SellerOrders = ({ onViewOrder }) => {
             {/* Orders Table */}
             <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
                 {loading ? (
-                    <div className="p-12 text-center">
-                        <div className="animate-spin rounded-full h-12 w-12 border-b-4 border-orange-500 mx-auto mb-4"></div>
-                        <p className="text-gray-500">Loading orders...</p>
+                    <div className="overflow-x-auto">
+                        <table className="w-full">
+                            <thead className="bg-gray-50 border-b border-gray-200">
+                                <tr>
+                                    {[...Array(8)].map((_, i) => (
+                                        <th key={i} className="px-6 py-4"><Skeleton className="h-4 w-20" /></th>
+                                    ))}
+                                </tr>
+                            </thead>
+                            <tbody className="divide-y divide-gray-100">
+                                {[...Array(5)].map((_, i) => (
+                                    <tr key={i}>
+                                        <td className="px-6 py-4"><Skeleton className="h-4 w-4" /></td>
+                                        <td className="px-6 py-4"><Skeleton className="h-4 w-24" /></td>
+                                        <td className="px-6 py-4">
+                                            <div className="flex items-center gap-3">
+                                                <Skeleton variant="circle" className="w-8 h-8" />
+                                                <div className="space-y-2">
+                                                    <Skeleton className="h-4 w-32" />
+                                                    <Skeleton className="h-3 w-24" />
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td className="px-6 py-4"><div className="space-y-1"><Skeleton className="h-4 w-16" /> <Skeleton className="h-3 w-24" /></div></td>
+                                        <td className="px-6 py-4"><Skeleton className="h-4 w-24" /></td>
+                                        <td className="px-6 py-4"><Skeleton className="h-6 w-24 rounded-full" /></td>
+                                        <td className="px-6 py-4"><Skeleton className="h-4 w-16" /></td>
+                                        <td className="px-6 py-4"><div className="flex gap-2"><Skeleton className="w-8 h-8 rounded-lg" /> <Skeleton className="w-8 h-8 rounded-lg" /></div></td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
                     </div>
                 ) : error ? (
+
                     <div className="p-12 text-center">
                         <p className="text-red-600">{error}</p>
                     </div>

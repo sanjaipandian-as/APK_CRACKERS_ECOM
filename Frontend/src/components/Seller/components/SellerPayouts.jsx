@@ -11,6 +11,8 @@ import {
 } from 'react-icons/md';
 import { FaFire, FaRupeeSign } from 'react-icons/fa';
 import API from '../../../../api';
+import Skeleton from '../../Common/Skeleton';
+
 
 const SellerPayouts = () => {
     const [loading, setLoading] = useState(true);
@@ -203,11 +205,33 @@ const SellerPayouts = () => {
                     </div>
 
                     {loading ? (
-                        <div className="p-12 text-center">
-                            <div className="animate-spin rounded-full h-12 w-12 border-b-4 border-orange-500 mx-auto"></div>
-                            <p className="text-gray-500 mt-4">Loading payouts...</p>
+                        <div className="overflow-x-auto">
+                            <table className="w-full">
+                                <thead className="bg-gray-50 border-b border-gray-200">
+                                    <tr>
+                                        {[...Array(8)].map((_, i) => (
+                                            <th key={i} className="px-6 py-3"><Skeleton className="h-4 w-20" /></th>
+                                        ))}
+                                    </tr>
+                                </thead>
+                                <tbody className="divide-y divide-gray-100">
+                                    {[...Array(5)].map((_, i) => (
+                                        <tr key={i}>
+                                            <td className="px-6 py-4"><Skeleton className="h-4 w-16" /></td>
+                                            <td className="px-6 py-4"><Skeleton className="h-4 w-24" /></td>
+                                            <td className="px-6 py-4"><Skeleton className="h-6 w-20 rounded-full" /></td>
+                                            <td className="px-6 py-4"><Skeleton className="h-4 w-16" /></td>
+                                            <td className="px-6 py-4"><Skeleton className="h-4 w-16" /></td>
+                                            <td className="px-6 py-4"><Skeleton className="h-4 w-16" /></td>
+                                            <td className="px-6 py-4"><Skeleton className="h-6 w-24 rounded-full" /></td>
+                                            <td className="px-6 py-4"><Skeleton className="h-4 w-24" /></td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
                         </div>
                     ) : payouts.length === 0 ? (
+
                         <div className="p-12 text-center">
                             <MdReceipt className="w-16 h-16 text-gray-300 mx-auto mb-4" />
                             <p className="text-gray-500 text-lg font-medium mb-2">No payouts yet</p>

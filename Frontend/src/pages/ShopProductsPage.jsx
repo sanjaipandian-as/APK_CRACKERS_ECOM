@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import API from '../../api';
+import Skeleton from '../components/Common/Skeleton';
+
 import Topbar from '../components/Customer/Topbar';
 import Sidebar from '../components/Customer/Sidebar';
 import Footer from '../components/Customer/Footer';
@@ -245,20 +247,21 @@ const ShopProductsPage = () => {
                         {loading ? (
                             <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6">
                                 {[...Array(8)].map((_, index) => (
-                                    <div key={index} className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden h-[350px]">
-                                        <div className="aspect-[4/3] bg-gray-50 animate-pulse" />
+                                    <div key={index} className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden h-fit">
+                                        <Skeleton className="aspect-[4/3] w-full rounded-none" />
                                         <div className="p-4 space-y-4">
-                                            <div className="h-5 bg-gray-50 rounded-lg animate-pulse" />
-                                            <div className="h-4 bg-gray-50 rounded-lg w-2/3 animate-pulse" />
+                                            <Skeleton className="h-5 w-full" />
+                                            <Skeleton className="h-4 w-2/3" />
                                             <div className="flex justify-between items-center pt-4">
-                                                <div className="h-8 bg-gray-50 rounded-lg w-1/3 animate-pulse" />
-                                                <div className="h-10 bg-gray-50 rounded-xl w-1/3 animate-pulse" />
+                                                <Skeleton className="h-8 w-1/3" />
+                                                <Skeleton className="h-10 w-1/3 rounded-xl" />
                                             </div>
                                         </div>
                                     </div>
                                 ))}
                             </div>
                         ) : products.length === 0 ? (
+
                             <div className="flex flex-col items-center justify-center py-20 bg-white rounded-3xl border-2 border-dashed border-gray-100">
                                 <FaStore className="text-7xl text-gray-200 mb-6" />
                                 <h2 className="text-2xl font-black text-gray-900 mb-2">Inventory Empty</h2>

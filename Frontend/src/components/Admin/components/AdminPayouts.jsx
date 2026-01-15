@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import API from '../../../../api';
+import Skeleton from '../../Common/Skeleton';
+
 import {
     MdAttachMoney,
     MdCheckCircle,
@@ -126,14 +128,62 @@ const AdminPayouts = () => {
 
     if (loading) {
         return (
-            <div className="flex items-center justify-center h-full">
-                <div className="text-center">
-                    <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
-                    <p className="mt-4 text-gray-600">Loading payouts...</p>
+            <div className="h-full">
+                <div className="mb-6">
+                    <Skeleton className="h-10 w-64 mb-2" />
+                    <Skeleton className="h-4 w-96" />
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                    {[...Array(3)].map((_, i) => (
+                        <div key={i} className="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
+                            <div className="flex items-center justify-between">
+                                <div className="space-y-2">
+                                    <Skeleton className="h-4 w-20" />
+                                    <Skeleton className="h-8 w-32" />
+                                    <Skeleton className="h-3 w-40" />
+                                </div>
+                                <Skeleton className="w-10 h-10" />
+                            </div>
+                        </div>
+                    ))}
+                </div>
+                <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
+                    <div className="overflow-x-auto">
+                        <table className="w-full">
+                            <thead className="bg-gray-50 border-b border-gray-200">
+                                <tr>
+                                    {[...Array(9)].map((_, i) => (
+                                        <th key={i} className="px-6 py-3"><Skeleton className="h-4 w-20" /></th>
+                                    ))}
+                                </tr>
+                            </thead>
+                            <tbody className="bg-white divide-y divide-gray-200">
+                                {[...Array(5)].map((_, i) => (
+                                    <tr key={i}>
+                                        <td className="px-6 py-4"><Skeleton className="h-4 w-24" /></td>
+                                        <td className="px-6 py-4">
+                                            <div className="space-y-1">
+                                                <Skeleton className="h-4 w-32" />
+                                                <Skeleton className="h-3 w-24" />
+                                            </div>
+                                        </td>
+                                        <td className="px-6 py-4"><Skeleton className="h-4 w-16" /></td>
+                                        <td className="px-6 py-4"><Skeleton className="h-4 w-16" /></td>
+                                        <td className="px-6 py-4"><Skeleton className="h-4 w-16" /></td>
+                                        <td className="px-6 py-4"><Skeleton className="h-4 w-16" /></td>
+                                        <td className="px-6 py-4"><Skeleton className="h-6 w-16 rounded-full" /></td>
+                                        <td className="px-6 py-4"><Skeleton className="h-4 w-24" /></td>
+                                        <td className="px-6 py-4"><Skeleton className="h-4 w-20" /></td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         );
     }
+
 
     return (
         <div className="h-full">

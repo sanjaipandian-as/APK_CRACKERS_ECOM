@@ -6,6 +6,8 @@ import Adminorders from '../components/Adminorders';
 import AdminPayouts from '../components/AdminPayouts';
 import AdminAllProducts from '../components/AdminAllProducts';
 import API from '../../../../api';
+import Skeleton from '../../Common/Skeleton';
+
 
 import {
     MdDashboard,
@@ -86,14 +88,51 @@ const Adminhome = () => {
         // Show loading state
         if (loading) {
             return (
-                <div className="p-6 flex items-center justify-center min-h-screen">
-                    <div className="text-center">
-                        <div className="w-16 h-16 border-4 border-blue-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-                        <p className="text-gray-600">Loading dashboard statistics...</p>
+                <div className="p-6">
+                    <div className="mb-8">
+                        <Skeleton className="h-10 w-64 mb-2" />
+                        <Skeleton className="h-4 w-96" />
+                    </div>
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                        {[...Array(4)].map((_, i) => (
+                            <div key={i} className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+                                <Skeleton className="w-12 h-12 rounded-lg mb-4" />
+                                <Skeleton className="h-4 w-24 mb-2" />
+                                <Skeleton className="h-8 w-32" />
+                            </div>
+                        ))}
+                    </div>
+                    <div className="mb-8">
+                        <Skeleton className="h-7 w-40 mb-4" />
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                            {[...Array(3)].map((_, i) => (
+                                <div key={i} className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+                                    <div className="flex justify-between mb-4">
+                                        <Skeleton className="w-12 h-12 rounded-lg" />
+                                        <Skeleton className="w-12 h-10" />
+                                    </div>
+                                    <Skeleton className="h-5 w-32 mb-2" />
+                                    <Skeleton className="h-4 w-24" />
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                    <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 space-y-4">
+                        <Skeleton className="h-7 w-40 mb-4" />
+                        {[...Array(3)].map((_, i) => (
+                            <div key={i} className="flex gap-4 p-3 bg-gray-50 rounded-lg">
+                                <Skeleton variant="circle" className="w-10 h-10" />
+                                <div className="flex-1 space-y-2">
+                                    <Skeleton className="h-4 w-1/3" />
+                                    <Skeleton className="h-3 w-20" />
+                                </div>
+                            </div>
+                        ))}
                     </div>
                 </div>
             );
         }
+
 
         // Show error state
         if (error) {

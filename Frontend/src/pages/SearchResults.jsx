@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { FaStar, FaShoppingCart, FaHeart, FaSearch, FaFilter, FaTimes, FaCheckCircle, FaExclamationCircle, FaChevronDown, FaChevronUp } from 'react-icons/fa';
 import API from '../../api';
+import Skeleton from '../components/Common/Skeleton';
+
 import Topbar from '../components/Customer/Topbar';
 import Footer from '../components/Customer/Footer';
 
@@ -509,13 +511,35 @@ const SearchResults = () => {
                         </div>
 
                         {loading ? (
-                            <div className="flex items-center justify-center py-20">
-                                <div className="text-center">
-                                    <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-orange-500 mx-auto mb-4"></div>
-                                    <p className="text-gray-600">Searching products...</p>
-                                </div>
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                                {[...Array(8)].map((_, i) => (
+                                    <div key={i} className="bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-100 p-4">
+                                        <Skeleton className="w-full aspect-[4/3] mb-4" />
+                                        <div className="space-y-4">
+                                            <div className="flex justify-between items-start">
+                                                <Skeleton className="h-6 w-2/3" />
+                                                <Skeleton className="h-6 w-12" />
+                                            </div>
+                                            <div className="flex justify-between items-center">
+                                                <div className="space-y-1">
+                                                    <Skeleton className="h-3 w-16" />
+                                                    <Skeleton className="h-4 w-24" />
+                                                </div>
+                                                <div className="space-y-1 text-right">
+                                                    <Skeleton className="h-3 w-12 ml-auto" />
+                                                    <Skeleton className="h-4 w-20" />
+                                                </div>
+                                            </div>
+                                            <div className="flex justify-between items-center pt-3 border-t border-gray-100">
+                                                <Skeleton className="h-7 w-20" />
+                                                <Skeleton className="h-10 w-32 rounded-lg" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                ))}
                             </div>
                         ) : error ? (
+
                             <div className="text-center py-20">
                                 <FaExclamationCircle className="w-16 h-16 text-red-500 mx-auto mb-4" />
                                 <p className="text-gray-800 text-lg mb-4">{error}</p>

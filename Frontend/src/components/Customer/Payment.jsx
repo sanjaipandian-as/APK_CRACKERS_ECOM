@@ -4,6 +4,9 @@ import { FaCreditCard, FaMoneyBillWave, FaLock, FaCheckCircle, FaArrowLeft, FaEx
 import { MdAccountBalanceWallet, MdLocationOn, MdEdit } from 'react-icons/md';
 import { SiVisa, SiMastercard, SiAmericanexpress, SiPaytm, SiGooglepay, SiPhonepe } from 'react-icons/si';
 import API from '../../../api';
+import Skeleton from '../Common/Skeleton';
+
+
 import { formatAddress } from '../../utils/addressHelper';
 
 const Payment = () => {
@@ -390,14 +393,60 @@ const Payment = () => {
 
     if (loading) {
         return (
-            <div className="min-h-screen bg-white flex items-center justify-center">
-                <div className="text-center">
-                    <div className="animate-spin rounded-full h-12 w-12 border-4 border-orange-200 border-t-orange-500 mx-auto mb-4"></div>
-                    <p className="text-gray-600">Preparing checkout...</p>
+            <div className="min-h-screen bg-gray-50">
+                <div className="bg-white border-b border-gray-200 p-4 shadow-sm">
+                    <div className="flex justify-between items-center max-w-7xl mx-auto px-4">
+                        <Skeleton className="h-6 w-32" />
+                        <Skeleton className="h-4 w-40" />
+                    </div>
+                </div>
+                <div className="max-w-7xl mx-auto px-4 py-8">
+                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                        <div className="lg:col-span-2 space-y-6">
+                            <div className="space-y-2">
+                                <Skeleton className="h-8 w-64" />
+                                <Skeleton className="h-4 w-96" />
+                            </div>
+                            <div className="bg-white rounded-xl border border-gray-200 p-6 space-y-6">
+                                <Skeleton className="h-10 w-48" />
+                                <div className="space-y-4">
+                                    {[...Array(2)].map((_, i) => (
+                                        <div key={i} className="flex gap-4 p-4 border border-gray-100 rounded-xl">
+                                            <Skeleton className="w-24 h-24 rounded-lg" />
+                                            <div className="flex-1 space-y-3">
+                                                <Skeleton className="h-5 w-1/2" />
+                                                <Skeleton className="h-4 w-1/3" />
+                                                <div className="flex gap-4">
+                                                    <Skeleton className="h-8 w-20" />
+                                                    <Skeleton className="h-8 w-20" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                            <div className="bg-white rounded-xl border border-gray-200 p-6 space-y-3">
+                                <Skeleton className="h-10 w-48" />
+                                <Skeleton className="h-20 w-full" />
+                            </div>
+                        </div>
+                        <div className="lg:col-span-1">
+                            <div className="bg-white rounded-xl border border-gray-200 p-6 space-y-6">
+                                <Skeleton className="h-10 w-full" />
+                                <div className="space-y-3">
+                                    <Skeleton className="h-4 w-full" />
+                                    <Skeleton className="h-4 w-full" />
+                                    <Skeleton className="h-8 w-full mt-4" />
+                                </div>
+                                <Skeleton className="h-14 w-full rounded-xl" />
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         );
     }
+
 
     if (error) {
         return (

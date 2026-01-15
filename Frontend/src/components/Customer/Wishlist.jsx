@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import { FaShoppingCart, FaTrash, FaArrowLeft, FaHeartBroken, FaTimes, FaCheckCircle, FaTag, FaStar } from 'react-icons/fa';
 import { BsFillBagHeartFill } from 'react-icons/bs';
 import API from '../../../api';
+import Skeleton from '../Common/Skeleton';
+
 
 const Wishlist = () => {
     const navigate = useNavigate();
@@ -101,18 +103,43 @@ const Wishlist = () => {
 
     if (loading) {
         return (
-            <div className="min-h-screen bg-gradient-to-br from-orange-50 via-white to-yellow-50 flex flex-col relative">
-
-                <div className="text-center">
-                    <div className="relative">
-                        <div className="animate-spin rounded-full h-20 w-20 border-b-4 border-orange-500 mx-auto mb-6"></div>
-                        <BsFillBagHeartFill className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-8 h-8 text-orange-500" />
+            <div className="min-h-screen bg-gray-50 flex flex-col pt-24 pb-16">
+                <div className="w-full px-3 sm:px-4 md:px-6 lg:px-8">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-4 md:gap-5 lg:gap-6">
+                        {[...Array(8)].map((_, i) => (
+                            <div key={i} className="bg-white rounded-xl sm:rounded-2xl overflow-hidden shadow-sm border border-gray-100 p-4">
+                                <Skeleton className="w-full aspect-[4/3] mb-4" />
+                                <div className="space-y-4">
+                                    <div className="flex justify-between items-start">
+                                        <Skeleton className="h-6 w-2/3" />
+                                        <Skeleton className="h-6 w-10" />
+                                    </div>
+                                    <div className="flex justify-between pt-2 border-b border-gray-50 pb-3">
+                                        <div className="space-y-1 w-1/3">
+                                            <Skeleton className="h-3 w-1/2" />
+                                            <Skeleton className="h-4 w-full" />
+                                        </div>
+                                        <div className="space-y-1 w-1/3 text-right">
+                                            <Skeleton className="h-3 w-1/2 block ml-auto" />
+                                            <Skeleton className="h-4 w-full" />
+                                        </div>
+                                    </div>
+                                    <div className="flex justify-between items-center pt-2">
+                                        <div className="space-y-1">
+                                            <Skeleton className="h-7 w-20" />
+                                            <Skeleton className="h-3 w-12" />
+                                        </div>
+                                        <Skeleton className="h-10 w-24 rounded-xl" />
+                                    </div>
+                                </div>
+                            </div>
+                        ))}
                     </div>
-                    <p className="text-gray-700 font-semibold text-lg">Loading your wishlist...</p>
                 </div>
             </div>
         );
     }
+
 
     if (wishlistItems.length === 0) {
         return (

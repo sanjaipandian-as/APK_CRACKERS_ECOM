@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react';
 import { FaBox, FaCheckCircle, FaTruck, FaTimesCircle, FaClock, FaMapMarkerAlt, FaRupeeSign, FaCalendar, FaShoppingBag, FaChevronDown, FaChevronUp, FaCreditCard } from 'react-icons/fa';
 import API from '../../api';
 import { formatAddress } from '../utils/addressHelper';
+import Skeleton from '../components/Common/Skeleton';
+
 
 const OrdersPage = () => {
     const [orders, setOrders] = useState([]);
@@ -104,14 +106,29 @@ const OrdersPage = () => {
 
     if (loading) {
         return (
-            <div className="flex items-center justify-center py-12 sm:py-20">
-                <div className="text-center">
-                    <div className="animate-spin rounded-full h-12 w-12 sm:h-16 sm:w-16 border-b-4 border-orange-500 mx-auto mb-4"></div>
-                    <p className="text-gray-600 font-medium text-sm sm:text-base">Loading your orders...</p>
-                </div>
+            <div className="space-y-4">
+                {[...Array(3)].map((_, i) => (
+                    <div key={i} className="bg-white rounded-2xl border-2 border-gray-100 p-6 flex flex-col sm:flex-row gap-4">
+                        <div className="flex items-center gap-4 flex-1">
+                            <Skeleton className="w-14 h-14 rounded-xl flex-shrink-0" />
+                            <div className="flex-1 space-y-2">
+                                <Skeleton className="h-6 w-1/3" />
+                                <Skeleton className="h-4 w-1/2" />
+                            </div>
+                        </div>
+                        <div className="flex items-center justify-between sm:justify-end gap-4 min-w-[200px]">
+                            <div className="space-y-2">
+                                <Skeleton className="h-3 w-16" />
+                                <Skeleton className="h-6 w-24" />
+                            </div>
+                            <Skeleton className="h-11 w-32 rounded-xl" />
+                        </div>
+                    </div>
+                ))}
             </div>
         );
     }
+
 
     if (error) {
         return (

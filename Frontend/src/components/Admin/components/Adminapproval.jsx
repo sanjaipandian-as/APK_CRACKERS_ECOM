@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import API from "../../../../api";
+import Skeleton from "../../Common/Skeleton";
+
 
 const Adminapproval = () => {
     const [products, setProducts] = useState([]);
@@ -81,15 +83,32 @@ const Adminapproval = () => {
 
     if (loading) {
         return (
-            <div className="p-8 max-w-7xl mx-auto">
-                <h1 className="text-3xl font-bold text-gray-900 mb-8 text-center">Product Approvals</h1>
-                <div className="flex flex-col items-center justify-center py-16 gap-4">
-                    <div className="w-12 h-12 border-4 border-gray-200 border-t-indigo-600 rounded-full animate-spin"></div>
-                    <p className="text-gray-600">Loading pending products...</p>
+            <div className="p-4 md:p-8 max-w-7xl mx-auto">
+                <Skeleton className="h-10 w-64 mx-auto mb-8" />
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-8">
+                    {[...Array(6)].map((_, i) => (
+                        <div key={i} className="bg-white rounded-xl overflow-hidden shadow-md space-y-4 pb-6">
+                            <Skeleton className="w-full h-64" />
+                            <div className="p-6 space-y-4">
+                                <Skeleton className="h-6 w-3/4" />
+                                <Skeleton className="h-4 w-full" />
+                                <div className="space-y-2 bg-gray-50 p-4 rounded-lg">
+                                    <Skeleton className="h-4 w-full" />
+                                    <Skeleton className="h-4 w-full" />
+                                    <Skeleton className="h-4 w-full" />
+                                </div>
+                                <div className="flex gap-4">
+                                    <Skeleton className="h-12 w-full rounded-lg" />
+                                    <Skeleton className="h-12 w-full rounded-lg" />
+                                </div>
+                            </div>
+                        </div>
+                    ))}
                 </div>
             </div>
         );
     }
+
 
     if (error) {
         return (

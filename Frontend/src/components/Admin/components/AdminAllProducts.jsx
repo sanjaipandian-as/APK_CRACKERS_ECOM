@@ -14,6 +14,8 @@ import {
 } from 'react-icons/md';
 import { FaRupeeSign, FaBox } from 'react-icons/fa';
 import API from '../../../../api';
+import Skeleton from '../../Common/Skeleton';
+
 
 const AdminAllProducts = () => {
     const [products, setProducts] = useState([]);
@@ -165,23 +167,36 @@ const AdminAllProducts = () => {
             <div className="p-8 bg-gray-50 min-h-screen">
                 {/* Stats Grid */}
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-                    {statCards.map((stat, index) => {
-                        const Icon = stat.icon;
-                        return (
-                            <div key={index} className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+                    {loading ? (
+                        [...Array(4)].map((_, i) => (
+                            <div key={i} className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
                                 <div className="flex items-start justify-between mb-4">
-                                    <div className={`w-12 h-12 ${stat.bgColor} rounded-full flex items-center justify-center`}>
-                                        <Icon className={`w-6 h-6 ${stat.iconColor}`} />
-                                    </div>
+                                    <Skeleton variant="circle" className="w-12 h-12" />
                                 </div>
-                                <p className="text-sm text-gray-500 mb-1">{stat.title}</p>
-                                <p className={`text-3xl font-bold ${stat.textColor}`}>
-                                    {stat.value}
-                                </p>
+                                <Skeleton className="h-4 w-1/3 mb-2" />
+                                <Skeleton className="h-8 w-1/2" />
                             </div>
-                        );
-                    })}
+                        ))
+                    ) : (
+                        statCards.map((stat, index) => {
+                            const Icon = stat.icon;
+                            return (
+                                <div key={index} className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+                                    <div className="flex items-start justify-between mb-4">
+                                        <div className={`w-12 h-12 ${stat.bgColor} rounded-full flex items-center justify-center`}>
+                                            <Icon className={`w-6 h-6 ${stat.iconColor}`} />
+                                        </div>
+                                    </div>
+                                    <p className="text-sm text-gray-500 mb-1">{stat.title}</p>
+                                    <p className={`text-3xl font-bold ${stat.textColor}`}>
+                                        {stat.value}
+                                    </p>
+                                </div>
+                            );
+                        })
+                    )}
                 </div>
+
 
                 {/* Filters */}
                 <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6 mb-6">
@@ -224,11 +239,42 @@ const AdminAllProducts = () => {
                     </div>
 
                     {loading ? (
-                        <div className="p-12 text-center">
-                            <div className="animate-spin rounded-full h-12 w-12 border-b-4 border-blue-500 mx-auto"></div>
-                            <p className="text-gray-500 mt-4">Loading products...</p>
+                        <div className="overflow-x-auto">
+                            <table className="w-full">
+                                <thead className="bg-gray-50">
+                                    <tr>
+                                        {[...Array(7)].map((_, i) => (
+                                            <th key={i} className="px-6 py-3">
+                                                <Skeleton className="h-4 w-20" />
+                                            </th>
+                                        ))}
+                                    </tr>
+                                </thead>
+                                <tbody className="divide-y divide-gray-100">
+                                    {[...Array(5)].map((_, i) => (
+                                        <tr key={i}>
+                                            <td className="px-6 py-4">
+                                                <div className="flex items-center gap-3">
+                                                    <Skeleton className="w-12 h-12 rounded-lg" />
+                                                    <div className="space-y-2">
+                                                        <Skeleton className="h-4 w-32" />
+                                                        <Skeleton className="h-3 w-20" />
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td className="px-6 py-4"><Skeleton className="h-4 w-24" /></td>
+                                            <td className="px-6 py-4"><Skeleton className="h-4 w-20" /></td>
+                                            <td className="px-6 py-4"><Skeleton className="h-4 w-16" /></td>
+                                            <td className="px-6 py-4"><Skeleton className="h-4 w-16" /></td>
+                                            <td className="px-6 py-4"><Skeleton className="h-6 w-20 rounded-full" /></td>
+                                            <td className="px-6 py-4"><Skeleton className="h-4 w-24" /></td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
                         </div>
                     ) : filteredProducts.length === 0 ? (
+
                         <div className="p-12 text-center">
                             <MdInventory className="w-16 h-16 text-gray-300 mx-auto mb-4" />
                             <p className="text-gray-500 text-lg font-medium mb-2">No products found</p>

@@ -12,6 +12,8 @@ import {
 } from 'react-icons/md';
 import { FaFire } from 'react-icons/fa';
 import API from '../../../../api';
+import Skeleton from '../../Common/Skeleton';
+
 
 const Sellerdashboard = () => {
     const [loading, setLoading] = useState(true);
@@ -178,33 +180,34 @@ const Sellerdashboard = () => {
     const stats = [
         {
             title: 'Total Orders',
-            value: loading ? '...' : dashboardData?.totalOrders || 0,
+            value: dashboardData?.totalOrders || 0,
             icon: MdShoppingCart,
             bgColor: 'bg-orange-100',
             iconColor: 'text-orange-600'
         },
         {
             title: 'Total Earnings',
-            value: loading ? '...' : `₹${(dashboardData?.totalEarnings || 0).toLocaleString('en-IN')}`,
+            value: `₹${(dashboardData?.totalEarnings || 0).toLocaleString('en-IN')}`,
             icon: MdAttachMoney,
             bgColor: 'bg-green-100',
             iconColor: 'text-green-600'
         },
         {
             title: 'Delivered Orders',
-            value: loading ? '...' : dashboardData?.deliveredOrders || 0,
+            value: dashboardData?.deliveredOrders || 0,
             icon: MdCheckCircle,
             bgColor: 'bg-blue-100',
             iconColor: 'text-blue-600'
         },
         {
             title: 'Pending Orders',
-            value: loading ? '...' : dashboardData?.pendingOrders || 0,
+            value: dashboardData?.pendingOrders || 0,
             icon: MdPending,
             bgColor: 'bg-yellow-100',
             iconColor: 'text-yellow-600'
         },
     ];
+
 
     const kycInfo = getKycStatusInfo(sellerInfo.kycStatus);
     const StatusIcon = kycInfo.icon;
@@ -260,23 +263,36 @@ const Sellerdashboard = () => {
 
                 {/* Stats Grid */}
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-                    {stats.map((stat, index) => {
-                        const Icon = stat.icon;
-                        return (
-                            <div key={index} className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+                    {loading ? (
+                        [...Array(4)].map((_, i) => (
+                            <div key={i} className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
                                 <div className="flex items-start justify-between mb-4">
-                                    <div className={`w-12 h-12 ${stat.bgColor} rounded-full flex items-center justify-center`}>
-                                        <Icon className={`w-6 h-6 ${stat.iconColor}`} />
-                                    </div>
+                                    <Skeleton variant="circle" className="w-12 h-12" />
                                 </div>
-                                <p className="text-sm text-gray-500 mb-1">{stat.title}</p>
-                                <p className="text-2xl font-bold text-gray-900">
-                                    {stat.value}
-                                </p>
+                                <Skeleton className="h-4 w-1/3 mb-2" />
+                                <Skeleton className="h-8 w-1/2" />
                             </div>
-                        );
-                    })}
+                        ))
+                    ) : (
+                        stats.map((stat, index) => {
+                            const Icon = stat.icon;
+                            return (
+                                <div key={index} className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+                                    <div className="flex items-start justify-between mb-4">
+                                        <div className={`w-12 h-12 ${stat.bgColor} rounded-full flex items-center justify-center`}>
+                                            <Icon className={`w-6 h-6 ${stat.iconColor}`} />
+                                        </div>
+                                    </div>
+                                    <p className="text-sm text-gray-500 mb-1">{stat.title}</p>
+                                    <p className="text-2xl font-bold text-gray-900">
+                                        {stat.value}
+                                    </p>
+                                </div>
+                            );
+                        })
+                    )}
                 </div>
+
 
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                     {/* Sales Chart Placeholder */}
@@ -323,11 +339,32 @@ const Sellerdashboard = () => {
                     </div>
 
                     {loading ? (
-                        <div className="p-12 text-center">
-                            <div className="animate-spin rounded-full h-12 w-12 border-b-4 border-orange-500 mx-auto"></div>
-                            <p className="text-gray-500 mt-4">Loading orders...</p>
+                        <div className="overflow-x-auto">
+                            <table className="w-full">
+                                <thead className="bg-gray-50">
+                                    <tr>
+                                        {[...Array(5)].map((_, i) => (
+                                            <th key={i} className="px-6 py-3">
+                                                <Skeleton className="h-4 w-20" />
+                                            </th>
+                                        ))}
+                                    </tr>
+                                </thead>
+                                <tbody className="divide-y divide-gray-100">
+                                    {[...Array(4)].map((_, i) => (
+                                        <tr key={i}>
+                                            <td className="px-6 py-4"><Skeleton className="h-4 w-16" /></td>
+                                            <td className="px-6 py-4"><Skeleton className="h-4 w-32" /></td>
+                                            <td className="px-6 py-4"><Skeleton className="h-4 w-24" /></td>
+                                            <td className="px-6 py-4"><Skeleton className="h-6 w-20 rounded-full" /></td>
+                                            <td className="px-6 py-4"><Skeleton className="h-4 w-16" /></td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
                         </div>
                     ) : recentOrders.length === 0 ? (
+
                         <div className="p-12 text-center">
                             <MdShoppingCart className="w-16 h-16 text-gray-300 mx-auto mb-4" />
                             <p className="text-gray-500">No orders yet</p>

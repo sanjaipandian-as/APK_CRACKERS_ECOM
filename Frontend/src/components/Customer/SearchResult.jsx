@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { FaStar, FaShoppingCart, FaCheckCircle, FaExclamationCircle, FaHeart, FaSearch, FaFilter, FaTimes } from 'react-icons/fa';
 import API from '../../../api';
+import Skeleton from '../Common/Skeleton';
+
 
 const SearchResult = () => {
     const navigate = useNavigate();
@@ -641,13 +643,59 @@ const SearchResult = () => {
 
                 <div className="flex-1 overflow-y-auto p-3 sm:p-4 md:p-6 pb-20 md:pb-6">
                     {loading ? (
-                        <div className="flex items-center justify-center py-12 sm:py-16 md:py-20">
-                            <div className="text-center">
-                                <div className="animate-spin rounded-full h-10 w-10 sm:h-12 sm:w-12 border-b-2 border-orange-500 mx-auto mb-3 sm:mb-4"></div>
-                                <p className="text-gray-600 text-sm sm:text-base">Searching products...</p>
+                        <div className="space-y-8">
+                            <div>
+                                <Skeleton className="h-8 w-48 mb-4" />
+                                <div className="space-y-4">
+                                    {[...Array(2)].map((_, i) => (
+                                        <div key={i} className="bg-white rounded-lg border border-gray-100 p-4 flex gap-4">
+                                            <Skeleton className="w-48 h-48 rounded-lg" />
+                                            <div className="flex-1 space-y-4">
+                                                <div className="flex justify-between">
+                                                    <Skeleton className="h-6 w-3/4" />
+                                                    <Skeleton className="h-6 w-12" />
+                                                </div>
+                                                <Skeleton className="h-4 w-1/4" />
+                                                <div className="space-y-2">
+                                                    <Skeleton className="h-4 w-full" />
+                                                    <Skeleton className="h-4 w-full" />
+                                                </div>
+                                                <div className="flex justify-between items-center pt-4 border-t">
+                                                    <Skeleton className="h-8 w-32" />
+                                                    <Skeleton className="h-10 w-40" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                            <div>
+                                <Skeleton className="h-8 w-48 mb-4" />
+                                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                                    {[...Array(3)].map((_, i) => (
+                                        <div key={i} className="bg-white rounded-lg border border-gray-100 p-4 space-y-4">
+                                            <Skeleton className="w-full aspect-square rounded-lg" />
+                                            <div className="space-y-3">
+                                                <div className="flex justify-between">
+                                                    <Skeleton className="h-5 w-2/3" />
+                                                    <Skeleton className="h-5 w-10" />
+                                                </div>
+                                                <div className="flex justify-between">
+                                                    <Skeleton className="h-4 w-1/3" />
+                                                    <Skeleton className="h-4 w-1/4" />
+                                                </div>
+                                                <div className="flex justify-between items-center pt-4 border-t">
+                                                    <Skeleton className="h-6 w-24" />
+                                                    <Skeleton className="h-10 w-full ml-4" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
                             </div>
                         </div>
                     ) : error ? (
+
                         <div className="flex flex-col items-center justify-center py-12 sm:py-16 md:py-20 px-4">
                             <FaExclamationCircle className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 text-red-500 mb-3 sm:mb-4" />
                             <p className="text-gray-600 text-base sm:text-lg text-center">{error}</p>

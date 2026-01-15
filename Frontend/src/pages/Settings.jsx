@@ -1,6 +1,8 @@
 import { useState, useEffect, lazy, Suspense } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FaUser, FaBell, FaShoppingBag, FaMapMarkerAlt, FaCheck, FaBox, FaTicketAlt } from 'react-icons/fa';
+import Skeleton from '../components/Common/Skeleton';
+
 
 // Lazy load components for better performance
 const AccountSettings = lazy(() => import('./Settingscomponants/AccountSettings'));
@@ -78,24 +80,55 @@ const Settings = () => {
 
     // Loading spinner component
     const LoadingSpinner = () => (
-        <div className="flex items-center justify-center py-12">
-            <div className="text-center">
-                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-orange-500 mx-auto mb-4"></div>
-                <p className="text-gray-600 font-medium">Loading...</p>
+        <div className="space-y-6">
+            <div className="flex items-center gap-3 pb-6 border-b border-gray-100">
+                <Skeleton className="w-12 h-12 rounded-xl" />
+                <div className="space-y-2">
+                    <Skeleton className="h-6 w-32" />
+                    <Skeleton className="h-4 w-48" />
+                </div>
+            </div>
+            <div className="space-y-4">
+                <Skeleton className="h-48 w-full rounded-xl" />
+                <Skeleton className="h-48 w-full rounded-xl" />
             </div>
         </div>
     );
 
+
     if (loading) {
         return (
-            <div className="min-h-screen bg-gradient-to-br from-gray-50 via-orange-50/30 to-gray-50 flex items-center justify-center">
-                <div className="text-center">
-                    <div className="animate-spin rounded-full h-16 w-16 border-b-4 border-orange-500 mx-auto mb-4"></div>
-                    <p className="text-gray-600 font-medium">Loading settings...</p>
+            <div className="min-h-screen bg-gray-50 flex flex-col">
+                <div className="bg-white border-b border-gray-200 p-8">
+                    <div className="max-w-7xl mx-auto flex flex-col items-center gap-4">
+                        <Skeleton className="w-16 h-16 rounded-2xl" />
+                        <div className="space-y-2 flex flex-col items-center">
+                            <Skeleton className="h-8 w-48" />
+                            <Skeleton className="h-4 w-64" />
+                        </div>
+                    </div>
+                </div>
+                <div className="flex-1 flex max-w-7xl mx-auto w-full p-6 gap-6">
+                    <div className="hidden lg:block w-80 space-y-2">
+                        {[...Array(5)].map((_, i) => (
+                            <Skeleton key={i} className="h-16 w-full rounded-xl" />
+                        ))}
+                    </div>
+                    <div className="flex-1 bg-white rounded-2xl p-8 space-y-6">
+                        <div className="flex items-center gap-3 pb-6 border-b border-gray-100">
+                            <Skeleton className="w-12 h-12 rounded-xl" />
+                            <div className="space-y-2">
+                                <Skeleton className="h-6 w-32" />
+                                <Skeleton className="h-4 w-48" />
+                            </div>
+                        </div>
+                        <Skeleton className="h-64 w-full rounded-xl" />
+                    </div>
                 </div>
             </div>
         );
     }
+
 
     return (
         <div className="min-h-screen bg-gradient-to-br from-gray-50 via-orange-50/30 to-gray-50 flex flex-col">

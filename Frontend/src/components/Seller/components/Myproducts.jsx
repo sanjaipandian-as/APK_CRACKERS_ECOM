@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { MdEdit, MdDelete, MdSearch, MdFilterList, MdInventory } from 'react-icons/md';
 import API from '../../../../api';
+import Skeleton from '../../Common/Skeleton';
+
 
 const Myproducts = ({ onNavigate }) => {
     const [searchQuery, setSearchQuery] = useState('');
@@ -159,11 +161,20 @@ const Myproducts = ({ onNavigate }) => {
 
             {/* Loading State */}
             {loading ? (
-                <div className="text-center py-12">
-                    <div className="animate-spin rounded-full h-12 w-12 border-b-4 border-orange-500 mx-auto mb-4"></div>
-                    <p className="text-gray-500">Loading products...</p>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                    {[...Array(8)].map((_, i) => (
+                        <div key={i} className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden p-4">
+                            <Skeleton className="w-full h-48 rounded-lg mb-4" />
+                            <div className="space-y-3">
+                                <Skeleton className="h-5 w-3/4" />
+                                <Skeleton className="h-3 w-1/2" />
+                                <Skeleton className="h-10 w-full rounded-lg mt-4" />
+                            </div>
+                        </div>
+                    ))}
                 </div>
             ) : error ? (
+
                 <div className="text-center py-12">
                     <p className="text-red-600">{error}</p>
                 </div>

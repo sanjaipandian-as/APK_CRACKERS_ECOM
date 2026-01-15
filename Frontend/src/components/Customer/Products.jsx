@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import { FaStar, FaShoppingCart, FaExclamationCircle, FaTag } from 'react-icons/fa';
 import { BsFillBagHeartFill } from 'react-icons/bs';
 import API from '../../../api';
+import Skeleton from '../Common/Skeleton';
+
 
 const Products = ({ filters = {} }) => {
     const navigate = useNavigate();
@@ -364,8 +366,35 @@ const Products = ({ filters = {} }) => {
             <div className="p-3 sm:p-4 md:p-6">
 
                 {loading ? (
-                    <div className="flex items-center justify-center py-16 sm:py-20">
-                        <div className="animate-spin rounded-full h-10 w-10 sm:h-12 sm:w-12 border-b-2 border-orange-500"></div>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-4 md:gap-5 lg:gap-6">
+                        {[...Array(8)].map((_, i) => (
+                            <div key={i} className="bg-white rounded-xl sm:rounded-2xl overflow-hidden shadow-sm border border-gray-100 p-3 sm:p-4">
+                                <Skeleton className="w-full aspect-[4/3] mb-4" />
+                                <div className="space-y-3">
+                                    <div className="flex justify-between items-start gap-2">
+                                        <Skeleton className="h-5 w-3/4" />
+                                        <Skeleton className="h-5 w-10" />
+                                    </div>
+                                    <div className="flex justify-between">
+                                        <div className="space-y-2">
+                                            <Skeleton className="h-3 w-12" />
+                                            <Skeleton className="h-4 w-16" />
+                                        </div>
+                                        <div className="space-y-2 flex flex-col items-end">
+                                            <Skeleton className="h-3 w-12" />
+                                            <Skeleton className="h-4 w-16" />
+                                        </div>
+                                    </div>
+                                    <div className="pt-3 border-t border-gray-100 flex justify-between items-center">
+                                        <div className="space-y-1">
+                                            <Skeleton className="h-6 w-20" />
+                                            <Skeleton className="h-3 w-12" />
+                                        </div>
+                                        <Skeleton className="h-10 w-24" />
+                                    </div>
+                                </div>
+                            </div>
+                        ))}
                     </div>
                 ) : error ? (
                     <div className="flex flex-col items-center justify-center py-16 sm:py-20 px-4">
