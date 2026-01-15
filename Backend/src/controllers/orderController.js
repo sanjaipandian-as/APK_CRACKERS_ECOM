@@ -19,7 +19,7 @@ export const createOrder = async (req, res) => {
     const orderItems = cart.items.map((item) => ({
       productId: item.productId._id,
       quantity: item.quantity,
-      price: item.productId.price || 0,
+      price: item.productId.pricing?.selling_price || item.productId.price || 0,
     }));
 
     // Calculate total price
@@ -104,10 +104,7 @@ export const getMyOrders = async (req, res) => {
     const customerId = req.user._id;
 
     const orders = await Order.find({ customerId })
-      .populate({
-        path: "items.productId",
-        select: "name price images category"
-      })
+      .populate("items.productId")
       .populate({
         path: "sellerId",
         select: "businessName email phone"

@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { FaTicketAlt, FaClock, FaCheckCircle, FaSpinner, FaTimesCircle, FaEye, FaChevronDown, FaChevronUp, FaInbox } from 'react-icons/fa';
 import API from '../../../api';
-import Skeleton from '../../Common/Skeleton';
+import Skeleton from '../../components/Common/Skeleton';
 
 
 const Tickets = () => {

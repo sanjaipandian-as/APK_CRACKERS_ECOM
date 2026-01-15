@@ -250,7 +250,7 @@ const SellerOrders = ({ onViewOrder }) => {
                                             </td>
                                             <td className="px-6 py-4">
                                                 <span className="text-sm font-semibold text-gray-900">
-                                                    ₹{order.totalAmount?.toLocaleString('en-IN') || 0}
+                                                    ₹{(order.totalAmount || order.items?.reduce((sum, item) => sum + ((item.price || item.productId?.pricing?.selling_price || 0) * item.quantity), 0) || 0).toLocaleString('en-IN')}
                                                 </span>
                                             </td>
                                             <td className="px-6 py-4">

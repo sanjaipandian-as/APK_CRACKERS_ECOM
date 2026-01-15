@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { FaMapMarkerAlt, FaPlus, FaEdit, FaTrash, FaCheck, FaTimes, FaSave } from 'react-icons/fa';
 import API from '../../../api';
-import Skeleton from '../../Common/Skeleton';
+import Skeleton from '../../components/Common/Skeleton';
 
 
 const AddressManagement = () => {

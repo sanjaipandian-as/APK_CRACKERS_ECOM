@@ -47,9 +47,9 @@ const Adminorders = () => {
                 products: order.items?.map(item => ({
                     name: item.productId?.name || 'Unknown Product',
                     quantity: item.quantity,
-                    price: item.price
+                    price: item.price || item.productId?.pricing?.selling_price || 0
                 })) || [],
-                totalAmount: order.totalAmount,
+                totalAmount: order.totalAmount || order.items?.reduce((sum, item) => sum + ((item.price || item.productId?.pricing?.selling_price || 0) * item.quantity), 0) || 0,
                 status: order.status,
                 paymentStatus: order.paymentStatus,
                 orderDate: new Date(order.createdAt).toLocaleDateString('en-IN'),

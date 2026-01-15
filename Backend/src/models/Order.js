@@ -79,4 +79,20 @@ const orderSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
+// Pre-save middleware to ensure totalAmount is always calculated correctly
+orderSchema.pre("save", async function () {
+  if (this.isModified("items") || this.isNew || this.totalAmount === 0) {
+    if (this.items && this.items.length > 0) {
+      const calculatedTotal = this.items.reduce((sum, item) => {
+        return sum + ((item.price || 0) * (item.quantity || 0));
+      }, 0);
+
+      // Only overwrite if it's 0 or we explicitly want to recalculate
+      if (this.totalAmount === 0 || this.isModified("items")) {
+        this.totalAmount = calculatedTotal;
+      }
+    }
+  }
+});
+
 export default mongoose.model("Order", orderSchema);

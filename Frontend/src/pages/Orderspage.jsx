@@ -41,7 +41,7 @@ const OrdersPage = () => {
         // Otherwise calculate from items
         if (order.items && order.items.length > 0) {
             return order.items.reduce((total, item) => {
-                const itemPrice = item.price || 0;
+                const itemPrice = item.price || item.productId?.pricing?.selling_price || item.productId?.price || 0;
                 const itemQuantity = item.quantity || 1;
                 return total + (itemPrice * itemQuantity);
             }, 0);
@@ -287,8 +287,12 @@ const OrdersPage = () => {
                                                     </div>
                                                 </div>
                                                 <div className="text-right flex-shrink-0">
-                                                    <p className="text-base sm:text-lg font-bold text-gray-900">₹{((item.price || 0) * (item.quantity || 1)).toFixed(2)}</p>
-                                                    <p className="text-xs text-gray-500">₹{(item.price || 0).toFixed(2)} each</p>
+                                                    <p className="text-base sm:text-lg font-bold text-gray-900">
+                                                        ₹{((item.price || item.productId?.pricing?.selling_price || item.productId?.price || 0) * (item.quantity || 1)).toFixed(2)}
+                                                    </p>
+                                                    <p className="text-xs text-gray-500">
+                                                        ₹{(item.price || item.productId?.pricing?.selling_price || item.productId?.price || 0).toFixed(2)} each
+                                                    </p>
                                                 </div>
                                             </div>
                                         ))}
